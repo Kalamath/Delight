@@ -14,6 +14,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="../javascript/ViewController.js"></script>
 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <link rel="stylesheet" href="../css/reset.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <link rel="stylesheet" href="../css/style.css" type="text/css">
@@ -21,18 +28,68 @@
 
 <body>
 
-    <div id="backgroundIMG" class="blur"> </div>
+
+
+    <div id="backgroundIMG" class="blur">
+
+    </div>
+
+    <div class="fixed-top">
+        <header class="topbar">
+            <div class="container">
+                <div class="row">
+                    <!-- social icon-->
+                    <div class="col-sm-12">
+                        <ul class="social-network">
+                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
+            <div class="container">
+                <a class="navbar-brand" href="index.html" style="text-transform: uppercase;">Delight</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sign-In</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
 
     <div id="screenWrapper">
         <div id="screen" class="screenCollapsed">
             <div id="welcomeScreen">
                 <span id=titleText></span>
                 <div id="description">A Place To Talk About Things</div>
-                <div id="startSurveyBTN" class="btn">start survey</div>
-                <div id="links">
+                <div id="startSurveyBTN" class="btn">Join Delight</div>
+                <!-- <div id="links">
                     <a id="apiLink" href="/api/friends" class="btn">Friend Finder API</a>
                     <a id="githubLink" href="https://github.com/jbpkp07/FriendFinder" class="btn">GitHub Repo</a>
-                </div>
+                </div> -->
             </div>
             <div id="surveyScreen" class="hidden">
                 <div id="surveyText">Survey Questions</div>
