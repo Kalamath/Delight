@@ -8,22 +8,30 @@
 
     <title>FriendFinder v2.1.1</title>
 
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="../img/delightIcon.png">
 
+    <!-- JS & jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="../javascript/ViewController.js"></script>
 
+    <!-- Bootstrap -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         type="text/css">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/reset.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <link rel="stylesheet" href="../css/style.css" type="text/css">
+
 </head>
 
 <body>
@@ -35,24 +43,10 @@
     </div>
 
     <div class="fixed-top">
-        <header class="topbar">
-            <div class="container">
-                <div class="row">
-                    <!-- social icon-->
-                    <div class="col-sm-12">
-                        <ul class="social-network">
-                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </header>
         <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
             <div class="container">
-                <a class="navbar-brand" href="index.html" style="text-transform: uppercase;">Delight</a>
+                <a class="navbar-brand" href="index.html"><img src="../img/delightTrans.png" alt="Delight"
+                        id="delightLogo"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -62,13 +56,9 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home
+                            <a class="nav-link" href="#">Have An Account?
                                 <span class="sr-only">(current)</span>
                             </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
                         </li>
 
                         <li class="nav-item">
@@ -83,8 +73,9 @@
     <div id="screenWrapper">
         <div id="screen" class="screenCollapsed">
             <div id="welcomeScreen">
-                <span id=titleText></span>
-                <div id="description">A Place To Talk About Things</div>
+                <span id=titleText>Connection is Delightful</span>
+                <div id="description">On Delight, you're more than just a photo. You have interets, passions and things
+                    that bring you joy. Here you get to connect with those who share you same Delights. </div>
                 <div id="startSurveyBTN" class="btn">Join Delight</div>
                 <!-- <div id="links">
                     <a id="apiLink" href="/api/friends" class="btn">Friend Finder API</a>
@@ -114,6 +105,21 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <!-- social icon-->
+                    <div class="col-sm-12">
+                        <ul class="social-network">
+                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </footer>
 
     <script>
         $(document).ready(() => {
