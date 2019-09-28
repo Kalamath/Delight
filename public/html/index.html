@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="../javascript/ViewController.js"></script>
+    <script src="../javascript/index2.js"></script>
 
     <!-- Bootstrap -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -38,9 +39,12 @@
 
 
 
-    <div id="backgroundIMG" class="blur">
+    <!-- <div id="backgroundIMG" class="blur"></div> -->
 
-    </div>
+    <section class="container">
+        <div class="fullBackground"></div>
+        <h2 class="caption">Delight</h2>
+    </section>
 
     <div class="fixed-top">
         <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
@@ -76,22 +80,22 @@
                 <span id=titleText>Connection is Delightful</span>
                 <div id="description">On Delight, you're more than just a photo. You have interets, passions and things
                     that bring you joy. Here you get to connect with those who share you same Delights. </div>
-                <div id="startSurveyBTN" class="btn">Join Delight</div>
+                <div id="startLoginBTN" class="btn">Join Delight</div>
                 <!-- <div id="links">
                     <a id="apiLink" href="/api/friends" class="btn">Friend Finder API</a>
                     <a id="githubLink" href="https://github.com/jbpkp07/FriendFinder" class="btn">GitHub Repo</a>
                 </div> -->
             </div>
-            <div id="surveyScreen" class="hidden">
-                <div id="surveyText">Survey Questions</div>
+            <div id="accountScreen" class="hidden">
+                <div id="createAccountText">Please Sign-In</div>
                 <form>
                     <input id="name" class="formInput" type="text" placeholder="Name (required)" spellcheck="false"
                         required>
-                    <input id="photo" class="formInput" type="text" placeholder="Photo URL (required)"
+                    <input id="photo" class="formInput" type="text" placeholder="Password (required)"
                         spellcheck="false" required>
                     <hr>
                     <div id="questionsWrapper"></div>
-                    <button id="submitSurveyBTN" class="btn" type="submit">submit</button>
+                    <button id="submitLoginBTN" class="btn" type="submit">Login</button>
                 </form>
                 <div id="friendMatchModal" class="modal">
                     <span>Friend match:</span>
@@ -121,10 +125,16 @@
             </div>
     </footer>
 
+    
     <script>
         $(document).ready(() => {
             const viewController = new ViewController();
         });
+        $('.fullBackground').fullClip({
+            images: ['../img/beachball.jpg', '../img/monkeys.jpg', '../img/threemen.jpg', '../img/friends.jpg'],
+            transitionTime: 2000,
+            wait: 5000,
+        })
     </script>
 
 </body>

@@ -6,15 +6,15 @@ class ViewController {
 
     constructor() {
 
-        this.backgroundIMGElement = $("#backgroundIMG");
+        this.backgroundIMGElement = $("#fullBackground");
         this.screenElement = $("#screen");
         this.welcomeScreenElement = $("#welcomeScreen");
-        this.startSurveyBTNElement = $("#startSurveyBTN");
-        this.surveyScreenElement = $("#surveyScreen");
+        this.startLoginBTNElement = $("#startLoginBTN");
+        this.surveyScreenElement = $("#accountScreen");
         this.nameInputElement = $("#name");
         this.photoInputElement = $("#photo");
         this.questionsWrapperElement = $("#questionsWrapper");
-        this.submitSurveyBTNElement = $("#submitSurveyBTN");
+        this.submitLoginBTNElement = $("#submitLoginBTN");
         this.friendMatchModalElement = $("#friendMatchModal");
         this.matchNameElement = $("#matchName");
         this.matchPhotoElement = $("#matchPhoto");
@@ -58,12 +58,12 @@ class ViewController {
 
     assignListeners() {
 
-        this.startSurveyBTNElement.one("click", () => {
+        this.startLoginBTNElement.one("click", () => {
 
             this.startSurvey();
         });
 
-        this.submitSurveyBTNElement.click((event) => {
+        this.submitLoginBTNElement.click((event) => {
 
             this.submitSurvey(event);
         });

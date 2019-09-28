@@ -1,99 +1,40 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+(function($) {
+  // defaults
+  $.fn.fullClip = function(options) {
+    var settings = $.extend({
+      current: 0,
+      images: [],
+      transitionTime: 1000,
+      wait: 3000,
+      static: false
+    }, options);
 
-// The API object contains methods for each kind of request we'll make
-var API = {
-  saveExample: function(example) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
-    });
-  },
-  getExamples: function() {
-    return $.ajax({
-      url: "api/examples",
-      type: "GET"
-    });
-  },
-  deleteExample: function(id) {
-    return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
-    });
-  }
-};
+    // preload images
+    var i, end;
+    for (i = 0, end = settings.images.length; i < end; ++i) {
+        new Image().src = settings.images[i];
+    }
 
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+    // sort out the transitions + specify vendor prefixes
+    $('.fullBackground')
+      .css('background-image', 'url(' + settings.images[settings.current] + ')')
+      .css('-webkit-transition', 'background ' + settings.transitionTime + 's ease-in-out')
+      .css('-moz-transition', 'background ' + settings.transitionTime + 'ms ease-in-out')
+      .css('-ms-transition', 'background ' + settings.transitionTime + 'ms ease-in-out')
+      .css('-o-transition', 'background ' + settings.transitionTime + 'ms ease-in-out')
+      .css('transition', 'background ' + settings.transitionTime + 'ms ease-in-out')
 
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
+    // if only one image, set as static background
+    if (settings.static) {
+      $(this)
+      .css('background-image', 'url(' + settings.images[settings.current] + ')');
+      return;
+    }
 
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
-    });
-
-    $exampleList.empty();
-    $exampleList.append($examples);
-  });
-};
-
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
-  event.preventDefault();
-
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
-  };
-
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
-  }
-
-  API.saveExample(example).then(function() {
-    refreshExamples();
-  });
-
-  $exampleText.val("");
-  $exampleDescription.val("");
-};
-
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
-
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
-  });
-};
-
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+    // change the background image
+    (function update() {
+      settings.current = (settings.current + 1) % settings.images.length;
+        $('.fullBackground').css('background-image', 'url(' + settings.images[settings.current] + ')');
+        setTimeout(update, settings.wait);
+    }());
+}}(jQuery));

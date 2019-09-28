@@ -109,14 +109,25 @@ body {
   color: var(--dark-white-transparent);
 }
 
-#backgroundIMG {
+.fullBackground {
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+/* #backgroundIMG {
   background-attachment: fixed;
   background-image: url(../img/delightLogoTrans.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
   height: 100%;
-}
+} */
 
 #screenWrapper {
   display: flex;
@@ -144,9 +155,9 @@ body {
 }
 
 .screenExpanded {
-  background: var(--dark-white-transparent);
-  border: 2px solid var(--lighter-gray-transparent);
-  height: 95%;
+  /* background: var(--dark-white-transparent); */
+  /* border: 2px solid var(--lighter-gray-transparent); */
+  height: 60%;
   transition: all 500ms ease-out;
   width: 768px;
 }
@@ -171,17 +182,20 @@ body {
   text-align: right;
   font-size: 14pt;
   margin-right: 100px;
-  color: var(--dark-white)
+  color: var(--dark-gray);
+  /* text-shadow: 2px 0 var(--dark-gray); */
 }
 
-#startSurveyBTN {
+#startLoginBTN {
   right: 10px;
   background: var(--light-blue);
   border: 3px solid var(--lighter-gray);
   margin: 40px auto auto 300px;
 }
 
-#surveyText {
+
+
+#createAccountText {
   font-size: 18pt;
   font-weight: 900;
   margin-top: 10px;
@@ -199,7 +213,7 @@ hr {
   margin-bottom: 15px;
 }
 
-#submitSurveyBTN {
+#submitLoginBTN {
   background: var(--medium-blue);
   border: 3px solid var(--lighter-gray);
   margin: 0 auto;
