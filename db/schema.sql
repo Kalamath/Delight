@@ -1,30 +1,39 @@
-        -- DROP DATABASE IF EXISTS burgers_db;
 
-        -- CREATE DATABASE burgers_db;
+DROP DATABASE IF EXISTS delightdb;
+CREATE DATABASE delightdb;
+USE delightdb;
 
-        -- USE burgers_db;
+CREATE TABLE user_info
+(
+        id INT NOT NULL
+        AUTO_INCREMENT,
+    username VARCHAR
+        (10) NOT NULL,
+    password VARCHAR
+        (10) NOT NULL,
+    fk_category_id INT NOT NULL,
+    PRIMARY KEY
+        (id)
+   
+);
 
-        -- CREATE TABLE burgers (
-        --     id         INT NOT NULL AUTO_INCREMENT,
-        --     name       VARCHAR(255) NOT NULL,
-        --     devoured   BOOLEAN NOT NULL DEFAULT FALSE,
-        --     createdAt  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        --     PRIMARY KEY(id)
-        -- );
+        CREATE TABLE lkp_interests
+        (
+                id INT NOT NULL
+                AUTO_INCREMENT,
+        interest_name VARCHAR
+                (10) NOT NULL,
+        fk_category_id INT NOT NULL,
+        PRIMARY KEY
+                (id)
+);
 
-        -- CREATE TABLE ingredients (
-        --     id         INT NOT NULL AUTO_INCREMENT,
-        --     name       VARCHAR(255) NOT NULL,
-        --     createdAt  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        --     PRIMARY KEY(id)
-        -- );
-
-        -- CREATE TABLE burger_ingredients (
-        --     id               INT NOT NULL AUTO_INCREMENT,
-        --     fk_burger_id     INT NOT NULL,
-        --     fk_ingredient_id INT NOT NULL,
-        --     createdAt        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        --     PRIMARY KEY (id),
-        --     CONSTRAINT fk_burger_id     FOREIGN KEY (fk_burger_id)     REFERENCES burgers(id)     ON UPDATE CASCADE ON DELETE CASCADE,
-        --     CONSTRAINT fk_ingredient_id FOREIGN KEY (fk_ingredient_id) REFERENCES ingredients(id) ON UPDATE CASCADE ON DELETE CASCADE
-        -- );
+                CREATE TABLE lkp_category
+                (
+                        id INT NOT NULL
+                        AUTO_INCREMENT,
+    category_name VARCHAR
+                        (10) NOT NULL,
+    PRIMARY KEY
+                        (id)
+);
