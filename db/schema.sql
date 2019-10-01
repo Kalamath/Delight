@@ -7,13 +7,11 @@ USE delightdb;
 
 CREATE TABLE user_info
 (
-
 id INT NOT NULL AUTO_INCREMENT,
 username VARCHAR(10) NOT NULL,
 password VARCHAR(10) NOT NULL,
 fk_category_id INT NOT NULL,
 PRIMARY KEY(id)
-   
 );
 
 CREATE TABLE lkp_interests
