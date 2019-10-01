@@ -448,14 +448,14 @@ a:hover {
 
 /* Carousel */
 
-#questionCarousel {
+/* #questionCarousel {
   text-align: center;
   margin: 0 auto;
-}
+} */
 
 .questions {
-  /* background: var(--dark-white); */
-  /* border: 3px solid var(--lighter-gray); */
+  background: var(--dark-white);
+  border: 3px solid var(--lighter-gray);
   font-family: 'Lalezar', cursive;
   font-weight: 400;
   font-size: 50px;
@@ -464,3 +464,51 @@ a:hover {
   margin-top: 200px;
 }
 
+#jobsCarouselContainer {
+  /* margin: 64px 0px 150px 0px; */
+  padding: 0;
+  width: 100%;
+}
+
+#jobResultsCarousel {
+  font-size: 18pt;
+  position: relative;
+  text-align: center;
+  top: -28px;
+}
+
+#carousel-inner {
+  margin: 0 auto;
+  width: 95%;
+}
+
+.carousel-item {
+  background: rgba(48,48,48,1.0);
+  border-radius: 5px;
+  border: 3px solid rgba(0,174,239,1.0);
+  height: 500px;
+  width: 100%;
+}
+
+.carousel-caption {
+  background: rgba(32,32,32,1.0);
+  border: 3px solid rgba(18,18,18,1.0);
+  border-radius: 10px;
+  color: rgba(248,248,248,1.0);
+  font-family: Arial, Helvetica, sans-serif;
+  height: 420px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.carousel-indicators li {
+  background-color: rgba(42,252,156,1.0);
+}
+
+.hidden {
+  opacity: 0.0;
+}
+
+.displayNone {
+  display: none;
+}
