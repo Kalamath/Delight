@@ -22,9 +22,9 @@ class ViewController {
 
         this.selectElements = [];
 
-        // this.assignQuestions();
-
         this.assignListeners();
+        
+        this.assignQuestions();
     }
 
     assignQuestions() {

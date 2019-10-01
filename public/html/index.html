@@ -60,13 +60,13 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Have An Account?
+                            <a class="nav-link" id="haveAccount" href="#">Have An Account?
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sign-In</a>
+                            <a class="nav-link" id="signIn" href="#">Sign-In</a>
                         </li>
                     </ul>
                 </div>
@@ -91,10 +91,11 @@
                 <form>
                     <input id="name" class="formInput" type="text" placeholder="Name (required)" spellcheck="false"
                         required>
-                    <input id="photo" class="formInput" type="text" placeholder="Password (required)"
+                    <input id="password" class="formInput" type="text" placeholder="Password (required)"
                         spellcheck="false" required>
                     <hr>
-                    <div id="questionsWrapper"></div>
+                    <!-- <div id="questionsWrapper"></div> -->
+
                     <button id="submitLoginBTN" class="btn" type="submit">Login</button>
                 </form>
                 <div id="friendMatchModal" class="modal">
@@ -125,15 +126,17 @@
             </div>
     </footer>
 
+    {{{ body }}}
+
     
     <script>
         $(document).ready(() => {
             const viewController = new ViewController();
         });
         $('.fullBackground').fullClip({
-            images: ['../img/beachball.jpg', '../img/monkeys.jpg', '../img/threemen.jpg', '../img/friends.jpg'],
-            transitionTime: 2000,
-            wait: 5000,
+            images: ['../img/beachball.jpg', '../img/monkeys.jpg', '../img/threemen.jpg', '../img/friends.jpg', '../img/candy.jpg', '../img/fair.jpg', '../img/lego.jpg', '../img/bubbles.jpg',],
+            transitionTime: 2500,
+            wait: 8000, 
         })
     </script>
 
