@@ -1,19 +1,17 @@
 :root {
-  --light-white: rgba(248,248,248,1.0);
-  --medium-white: rgba(232,232,232,1.0);
-  --dark-white: rgba(192,192,192,1.0);
-  --dark-white-invisible: rgba(192,192,192,0.3);
-  --dark-white-transparent: rgba(192,192,192,0.8);
-
-  --lighter-gray-invisible: rgba(72,72,72,0.0);
-  --lighter-gray-transparent: rgba(72,72,72,0.2);
-  --lighter-gray: rgba(72,72,72,1.0);
-  --light-gray: rgba(48,48,48,1.0);
-  --medium-gray: rgba(32,32,32,1.0);
-  --dark-gray: rgba(18,18,18,1.0);
-
-  --light-blue: rgba(0,174,239,1.0);
-  --medium-blue: rgba(30,145,255,1.0);
+  --light-white: rgba(248, 248, 248, 1.0);
+  --medium-white: rgba(232, 232, 232, 1.0);
+  --dark-white: rgba(192, 192, 192, 1.0);
+  --dark-white-invisible: rgba(192, 192, 192, 0.3);
+  --dark-white-transparent: rgba(192, 192, 192, 0.8);
+  --lighter-gray-invisible: rgba(72, 72, 72, 0.0);
+  --lighter-gray-transparent: rgba(72, 72, 72, 0.2);
+  --lighter-gray: rgba(72, 72, 72, 1.0);
+  --light-gray: rgba(48, 48, 48, 1.0);
+  --medium-gray: rgba(32, 32, 32, 1.0);
+  --dark-gray: rgba(18, 18, 18, 1.0);
+  --light-blue: rgba(0, 174, 239, 1.0);
+  --medium-blue: rgba(30, 145, 255, 1.0);
 }
 
 @font-face {
@@ -50,8 +48,7 @@ body {
   height: 100%;
   margin: 0;
   overflow-x: hidden;
-  /* overflow-y: hidden; */
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   width: 100%;
 }
@@ -199,8 +196,6 @@ body {
   margin: 40px auto auto 300px;
 }
 
-
-
 #createAccountText {
   font-size: 18pt;
   font-weight: 900;
@@ -268,12 +263,12 @@ hr {
   margin-top: 10px;
 }
 
-#links > a {
+#links>a {
   color: var(--light-blue);
   text-decoration: none;
 }
 
-#links > a:hover {
+#links>a:hover {
   color: var(--medium-blue);
   text-decoration: none;
 }
@@ -349,22 +344,22 @@ header .navbar {
 }
 
 ul.social-network {
-border:none;
-margin:0;
-padding:0;
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 
 ul.social-network li {
-border:none;  
-margin:0;
+  border: none;
+  margin: 0;
 }
 
 ul.social-network li i {
-margin:0;
+  margin: 0;
 }
 
 ul.social-network li {
-  display:inline;
+  display: inline;
   margin: 0 5px;
   border: 0px solid #2D2D2D;
   padding: 5px 0 0;
@@ -377,9 +372,9 @@ ul.social-network li {
 }
 
 ul.social-network {
-list-style: none;
-margin: 5px 0 10px -25px;
-float: right;
+  list-style: none;
+  margin: 5px 0 10px -25px;
+  float: right;
 }
 
 .waves-effect {
@@ -398,9 +393,10 @@ float: right;
   transition: .3s ease-out;
   color: #fff;
 }
+
 a {
-color: #0a0a0a;
-text-decoration: none;
+  color: #0a0a0a;
+  text-decoration: none;
 }
 
 li {
@@ -445,7 +441,6 @@ a:hover {
   color: white;
 }
 
-
 /* Carousel */
 
 /* #questionCarousel {
@@ -453,7 +448,7 @@ a:hover {
   margin: 0 auto;
 } */
 
-.questions {
+/* .questions {
   background: var(--dark-white);
   border: 3px solid var(--lighter-gray);
   font-family: 'Lalezar', cursive;
@@ -462,7 +457,7 @@ a:hover {
   color: var(--light-blue);
   text-align: center;
   margin-top: 200px;
-}
+} */
 
 #jobsCarouselContainer {
   /* margin: 64px 0px 150px 0px; */
@@ -483,18 +478,18 @@ a:hover {
 }
 
 .carousel-item {
-  background: rgba(48,48,48,1.0);
+  background: rgba(48, 48, 48, 1.0);
   border-radius: 5px;
-  border: 3px solid rgba(0,174,239,1.0);
+  border: 3px solid rgba(0, 174, 239, 1.0);
   height: 500px;
   width: 100%;
 }
 
 .carousel-caption {
-  background: rgba(32,32,32,1.0);
-  border: 3px solid rgba(18,18,18,1.0);
+  background: rgba(32, 32, 32, 1.0);
+  border: 3px solid rgba(18, 18, 18, 1.0);
   border-radius: 10px;
-  color: rgba(248,248,248,1.0);
+  color: rgba(248, 248, 248, 1.0);
   font-family: Arial, Helvetica, sans-serif;
   height: 420px;
   margin-bottom: 20px;
@@ -502,7 +497,7 @@ a:hover {
 }
 
 .carousel-indicators li {
-  background-color: rgba(42,252,156,1.0);
+  background-color: rgba(42, 252, 156, 1.0);
 }
 
 .hidden {
@@ -511,4 +506,26 @@ a:hover {
 
 .displayNone {
   display: none;
+}
+
+.slick-slide {
+  text-align: center;
+  color: #419be0;
+  background: white;
+  margin: 0px 20px 0px 20px;
+  /* word-wrap: break-word; */
+  padding: 10px;
+}
+
+​ .question {
+  font-size: 10pt;
+}
+
+.carouselContainer {
+  margin: 0 auto;
+  padding: 40px;
+  width: 100%;
+  color: #333;
+  background: #419be0;
+  height: 400px;
 }

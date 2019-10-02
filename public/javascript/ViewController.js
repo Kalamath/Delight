@@ -14,7 +14,7 @@ class ViewController {
         this.nameInputElement = $("#name");
         this.photoInputElement = $("#photo");
         this.questionsWrapperElement = $("#questionsWrapper");
-        this.submitLoginBTNElement = $("#submitLoginBTN");
+        // this.submitLoginBTNElement = $("#submitLoginBTN");
         this.friendMatchModalElement = $("#friendMatchModal");
         this.matchNameElement = $("#matchName");
         this.matchPhotoElement = $("#matchPhoto");
@@ -25,7 +25,7 @@ class ViewController {
         this.selectElements = [];
 
         this.assignListeners();
-        
+
         // this.assignQuestions();
     }
 
@@ -67,6 +67,7 @@ class ViewController {
 
         this.loginBTNElement.one("click", () => {
 
+
             this.startSurvey();
         })
 
@@ -83,35 +84,54 @@ class ViewController {
 
             setTimeout(() => {
 
+                console.log("im here next")
+
                 this.welcomeScreenElement.hide();
 
                 this.screenElement.attr("class", "screenExpanded");
+
+                // this.startSurvey();
 
             }, 500);
 
             setTimeout(() => {
 
-                this.surveyScreenElement.fadeTo(1000, 1.0);
+                console.log("I'm after that")
 
-                this.backgroundIMGElement.attr("class", "focus");
+                this.surveyScreenElement.fadeTo(1000, 1.0);
 
                 this.nameInputElement.focus();
 
             }, 1000);
         });
-    }
+    };
 
     startSurvey() {
 
         this.surveyScreenElement.fadeTo(500, 0.0).promise().then(() => {
 
             setTimeout(() => {
+                console.log("color change")
+                this.backgroundIMGElement.attr("class", "focus");
 
+                console.log('im here')
                 this.questionsForSurvey.fadeTo(1000, 1.0);
-            })
+            }, 500);
+
+            setTimeout(() => {
+
+                console.log("then me")
+
+                // this.nameInputElement.focus();
+                // this.surveyScreenElement.fadeTo(1000, 1.0);
+
+                // this.backgroundIMGElement.attr("class", "focus");
+
+
+            }, 1000);
+
         });
-        console.log('im here')
-    }
+    };
 
     // submitSurvey(event) {
 
@@ -155,45 +175,45 @@ class ViewController {
     //     }
     // }
 
-    isInputValid(name, photo, scores) {
+    // isInputValid(name, photo, scores) {
 
-        if (typeof name !== 'string' || name.length === 0) {
+    //     if (typeof name !== 'string' || name.length === 0) {
 
-            return false;
-        }
+    //         return false;
+    //     }
 
-        if (typeof photo !== 'string' || photo.length === 0) {
+    //     if (typeof photo !== 'string' || photo.length === 0) {
 
-            return false;
-        }
+    //         return false;
+    //     }
 
-        if (!Array.isArray(scores) || scores.length !== surveyQuestions.length) {
+    //     if (!Array.isArray(scores) || scores.length !== surveyQuestions.length) {
 
-            return false;
-        }
+    //         return false;
+    //     }
 
-        for (const score of scores) {
+    //     for (const score of scores) {
 
-            if (typeof score !== 'string' || score.length === 0) {
+    //         if (typeof score !== 'string' || score.length === 0) {
 
-                return false;
-            }
-        }
+    //             return false;
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    clearInputFields() {
+    // clearInputFields() {
 
-        this.nameInputElement.val("");
+    //     this.nameInputElement.val("");
 
-        this.photoInputElement.val("");
+    //     this.photoInputElement.val("");
 
-        for (const selectElement of this.selectElements) {
+    //     for (const selectElement of this.selectElements) {
 
-            selectElement.val("");
-        }
-    }
+    //         selectElement.val("");
+    //     }
+    // }
 
     showFriendMatchModal(name, photo, percentageMatch) {
 

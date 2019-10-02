@@ -1,128 +1,82 @@
-<!DOCTYPE html>
-<html lang="en-us">
-
+<html>
+​
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <title>FriendFinder v2.1.1</title>
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="../img/delightIcon.png">
-
-    <!-- JS & jQuery -->
+    <title>My Now Amazing Webpage</title>
+​
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-    <script src="../javascript/ViewController.js"></script>
-    <script src="../javascript/index2.js"></script>
-
-    <!-- Bootstrap -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        type="text/css">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/reset.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-    <link rel="stylesheet" href="../css/style.css" type="text/css">
-
+    <script type="text/javascript" src="../javascript/slick.min.js"></script>
+​
+    <link rel="stylesheet" type="text/css" href="../css/slick.css" />
+    <link rel="stylesheet" type="text/css" href="../css/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+​
 </head>
-
+​
 <body>
-
-
-
-    <!-- <div id="backgroundIMG" class="blur"></div> -->
-
-    <section class="container">
-        <div class="fullBackground"></div>
-    </section>
-
-    <div class="fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
-            <div class="container">
-                <a class="navbar-brand" href="index.html"><img src="../img/delightTrans.png" alt=""
-                        id="delightLogo"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-
-                    <ul class="navbar-nav ml-auto">
-
-                        <li class="nav-item active">
-                            <a class="nav-link" id="haveAccount" href="#">Have An Account?
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" id="signIn" href="#">Sign-In</a>
-                        </li>
-                    </ul>
-                </div>
+​
+    <div class='carouselContainer'>
+        <div class='single-item'>
+            <div class="question">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                     when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                      It has survived not only five centuries, but also the leap into electronic typesetting,
+                       remaining essentially unchanged. It was popularised in the 1960s with the release of 
+                       Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
+                       software like Aldus PageMaker including versions of Lorem Ipsum.
+​
+                
             </div>
-        </nav>
-    </div>
-
-    <div id="questionsWrapper"></div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <!-- social icon-->
-                <div class="col-sm-12">
-                    <ul class="social-network">
-                        <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a class="waves-effect waves-dark" href="#"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>
-                </div>
+            <div>
+                <h3>2</h3>
             </div>
-        </div>
-    </footer>
-
-    <div class="container">
-        <div class="jumbotron questions">
-            <div id="jobsCarouselContainer" class="container-fluid displayNone">
-                <div id="jobResultsCarousel">What're You Interested In?</div>
-                <div class="row">
-                    <div class="col-12">
-                        <div id="jobs-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                            <!-- wrapper for indicators -->
-                            <ol id="carousel-indicators" class="carousel-indicators"></ol>
-                            <!-- wrapper for slides -->
-                            <div id="carousel-inner" class="carousel-inner">Questions and Stuff</div>
-                        </div>
-                        <!-- controls -->
-                        <a class="carousel-control-prev" href="#jobs-carousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#jobs-carousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
+            <div>
+                <h3>3</h3>
+            </div>
+            <div>
+                <h3>4</h3>
+            </div>
+            <div>
+                <h3>5</h3>
+            </div>
+            <div>
+                <h3>6</h3>
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(() => {
-            const viewController = new ViewController();
+​
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.single-item').slick({
+                dots: true,
+                centerMode: true,
+                centerPadding: '60px',
+                slidesToShow: 3,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            arrows: false,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 3
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            arrows: false,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
         });
     </script>
-
+​
 </body>
-
+​
 </html>

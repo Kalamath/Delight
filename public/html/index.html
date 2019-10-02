@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="../javascript/ViewController.js"></script>
     <script src="../javascript/index2.js"></script>
+    <script src="../javascript/slick.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
     <!-- Bootstrap -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -30,8 +32,11 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/reset.css" type="text/css">
+    <link rel="stylesheet" href="../css/slick.css" type="text/css">
+    <link rel="stylesheet" href="../css/slick-theme.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 </head>
 
@@ -42,8 +47,7 @@
     <!-- <div id="backgroundIMG" class="blur"></div> -->
 
     <section class="container">
-        <div class="fullBackground"></div>
-        <h2 class="caption">Delight</h2>
+        <div id="fullBackground" class="fullBackground"></div>
     </section>
 
     <div class="fixed-top">
@@ -155,9 +159,6 @@
                 </div>
             </div>
     </footer>
-
-    {{{ body }}}
-
     
     <script>
         $(document).ready(() => {
