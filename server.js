@@ -1,47 +1,42 @@
-require("dotenv").config();
-var express = require("express");
-var exphbs = require("express-handlebars");
+"use strict";
 
-var db = require("./models");
+const port = process.env.PORT || 3000;
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+const terminal = require("terminal-kit").terminal;
+const express = require("express");
+const expressHandlebars = require("express-handlebars");
 
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static("public"));
+const configPaths = require("./config/configPaths.js");
+const header = require(configPaths.printHeaderFunctionsPath);
+const DelightDatabase = require(configPaths.delightDatabasePath);
+const APIroutes = require(configPaths.apiRoutesPath);
+const HTMLroutes = require(configPaths.htmlRoutesPath);
 
-// Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
-app.set("view engine", "handlebars");
+const delightDatabase = new DelightDatabase();
+const apiRoutes = new APIroutes(delightDatabase);
+const htmlRoutes = new HTMLroutes(delightDatabase);
 
-// Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+const expressApp = express();
 
-var syncOptions = { force: false };
+expressApp.use(express.static(configPaths.publicAssetsPath));
+expressApp.use(express.urlencoded({ extended: true }));
+expressApp.use(express.json());
+expressApp.use(apiRoutes.router);
+expressApp.use(htmlRoutes.router);
 
-// If running a test, set syncOptions.force to true
-// clearing the `testdb`
-if (process.env.NODE_ENV === "test") {
-  syncOptions.force = true;
-}
+expressApp.engine("handlebars", expressHandlebars({ defaultLayout: "main" }));
+expressApp.set("view engine", "handlebars");
 
-// Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
-    console.log(
-      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-      PORT,
-      PORT
-    );
-  });
+delightDatabase.connect().then(() => {
+
+    header.printHeader();
+
+    expressApp.listen(port, () => {
+
+        terminal.white("  Webserver listening on port ► ").brightGreen(port + "\n\n");
+    });
+
+}).catch((error) => {
+
+    terminal.red(error);
 });
-
-module.exports = app;
