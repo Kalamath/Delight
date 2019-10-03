@@ -21,34 +21,36 @@ class DelightDatabase extends SequelizeDatabase {
 
 
             //example----------------------------------------------------------
-            // const promises = [];
+            const promises = [];
 
-            // const burgersPromise = this.database.Burgers.bulkCreate(seeds.burgers);
+            const categoryPromise = this.SequelizeDatabase.DelightDatabase.lkp_category.bulkCreate(seeds.lkp_category);
 
-            // promises.push(burgersPromise);
+            promises.push(categoryPromise);
 
-            // const ingredientsPromise = this.database.Ingredients.bulkCreate(seeds.ingredients);
+            const interestsPromise = this.SequelizeDatabase.DelightDatabase.lkp_interests.bulkCreate(seeds.lkp_interests);
 
-            // promises.push(ingredientsPromise);
+            promises.push(interestsPromise);
 
-            // Promise.all(promises).then(() => {
+            const promptPromise = this.SequelizeDatabase.DelightDatabase.prompts.bulkCreate(seeds.prompts)
+
+            promises.push(promptPromise);
+
+            Promise.all(promises).then(() => {
 
             //     this.database.Burger_Ingredients.bulkCreate(seeds.burger_ingredients).then(() => {
 
-            //         resolve();
+                    resolve();
 
-            //     }).catch((error) => {
+                }).catch((error) => {
 
-            //         reject(error);
-            //     });
+                    reject(error);
+                });
 
-            // }).catch((error) => {
+            }).catch((error) => {
 
-            //     reject(error);
-            // });
-        });
-    }
-
+                reject(error);
+            });
+        }
 
     //Example for doing an inner join and then pre-processing a pruned handlebars object-----------
 
@@ -102,24 +104,45 @@ class DelightDatabase extends SequelizeDatabase {
 
     //Example for a basic FINDALL from a table-----------------------------------------------------
 
-    // getAllIngredients() {
+    //getAllInterests() {
 
-    //     const options = 
-    //     {
-    //         raw: true
-    //     };
+      //  const options = 
+        //{
+          //  raw: true
+        //};
 
     //     const promise = this.database.Ingredients.findAll(options);
-
+        //const promise = this.SequelizeDatabase.DelightDatabase.lkp_interests.findAll(options);
     //     return promise;
-    // }
+        //return promise;
+    //};
 
     //Example for an ADD that needs to update several tables---------------------------------------
 
-    // addNewBurger(name, ingredientIDs) {
+    addNewUser(id, username, password, fk_category_id) {
 
     //     return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
+            const newAccountObj = 
+            {
+                id,
+                username,
+                password,
+                fk_category_id
+            };
+            this.SequelizeDatabase.DelightDatabase.create(newAccountObj).then((result)=>{
+                
+                const newUserID = result.dataValues.id;
+
+                const username = result.dataValues.username;
+
+                const password = result.dataValues.password;
+            })
+
+            this.SequelizeDatabase.DelightDatabase
+        })
+    };
     //         const newBurgerObj = 
     //         {
     //             name,
@@ -161,8 +184,29 @@ class DelightDatabase extends SequelizeDatabase {
 
     //example for a basic UPDATE-------------------------------------------------------------------
 
-    // updateBurger(burgerToUpdate) {
+    updateAccount(user_info) {
+        
+        const options =
+            {
+                where: { id: user_info.id }
+            };
 
+            const promise = this.SequelizeDatabase.DelightDatabase.user_info.update(accountToUpdate, options);
+
+            return promise
+    };
+
+    deleteAccount(id) {
+
+        const options = 
+        {
+            where: { id }
+        };
+
+        const promise = this.SequelizeDatabase.DelightDatabase.user_info.destroy(options)
+
+        return promise;
+    };
     //     const options = 
     //     {
     //         where: { id: burgerToUpdate.id }
@@ -187,6 +231,5 @@ class DelightDatabase extends SequelizeDatabase {
     //     return promise;
     // }
 }
-
 
 module.exports = DelightDatabase;

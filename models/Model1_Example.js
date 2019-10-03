@@ -4,52 +4,39 @@ const Sequelize = require("sequelize");
 
 //Example Model------------------------------------------------------------------------------------
 
-// function defineBurgers(sequelize) {
+function defineCategory(sequelize){
+    class Categories extends Sequelize.Model {}
+     
+        const attributes = {
 
-//     class Burgers extends Sequelize.Model {}
+            category_name: {
+                type: Sequelize.String,
+                allowNull: false,
+                validate: {
+                    len: [1, 255]
+                }
+            }
+        },
 
-//     const attributes = {
+        const options = {
+            sequelize,
+            modelName: "Categories",
+            timestamps: false
+        }
 
-//         name: {
-//             type: Sequelize.STRING,
-//             allowNull: false,
-//             validate: {
-//                 len: [1, 255]
-//             }
-//         },
-//         devoured: {
-//             type: Sequelize.BOOLEAN,
-//             allowNull: false,
-//             defaultValue: 0,
-//         },
-//         createdAt: {
-//             type: "TIMESTAMP",
-//             allowNull: false,
-//             defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
-//         }
-//     };
+    Categories.init(attributes, options);
 
-//     const options = {
-//         sequelize,
-//         modelName: "Burgers",
-//         timestamps: false
-//     };
+    Categories.associate = (models) => {
 
-//     Burgers.init(attributes, options);
+        const associateOptions = {
 
-//     Burgers.associate = (models) => {
+            
+        }
+    }
+        Categories.hasMany(models.Interests);
 
-//         const associateOptions = {
-//             foreignKey: "fk_burger_id",
-//             onDelete: "cascade",
-//             onUpdate: "cascade"
-//         };
+        Categories.belongsTo(models.Users);
 
-//         Burgers.hasMany(models.Burger_Ingredients, associateOptions);
-//     };
-
-//     return Burgers;
-// }
-
-
-// module.exports = defineBurgers;
+        return Categories;
+    };
+module.exports = defineCategory;

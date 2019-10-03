@@ -17,7 +17,7 @@ VALUES
         ("Anime/Cartoons")
 ;
 INSERT INTO lkp_interests
-        (interest_name, fk_category_id)
+        (interest_name, category_id)
 
 VALUES
         ("Sushi", 1),
@@ -65,7 +65,7 @@ VALUES
         ("Men in Black", 5),
         ("Avengers: Endgame", 5),
         ("IT", 5),
-        ("Pulp", 5),
+        ("Pulp Fiction", 5),
         ("Black Hawk Down", 5),
         ("The Matrix", 5),
         ("The Shawshank Redemption", 5),
@@ -92,7 +92,7 @@ VALUES
         ("Air Jordans", 8),
         ("Louis Vuittons", 8),
         ("Red Bottoms", 8),
-        ("Victoria Secret", 8),
+        ("Victoria's Secret", 8),
         ("Adidas", 8),
         ("Fashion Nova", 8),
         ("Fenty", 8),
@@ -141,3 +141,18 @@ VALUES
         ("Ghost in the Shell", 12)
     ;
 
+INSERT INTO prompts
+        (prompt_string)
+
+VALUES
+        ("Out of these five choices, pick the one that either you have heard of or is the most appealing."),
+        ("Good job! Pick another!"),
+        ("Here's another one!"),
+        ("Keep 'em coming y'all!"),
+        ("Oh man, here we go again!"),
+        ("I'll keep pitching 'em up, you keep knocking it out of the park!"),
+        ("I'm impressed! Here's another one!"),
+        ("You're good at this! Go again!"),
+        ("Almost there! Pick again!"),
+        ("Last One!")
+;
