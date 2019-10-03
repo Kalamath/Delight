@@ -112,9 +112,9 @@ class DelightDatabase extends SequelizeDatabase {
         //};
 
     //     const promise = this.database.Ingredients.findAll(options);
-        //const promise = this.SequelizeDatabase.DelightDatabase.lkp_interests.findAll(options);
+        
     //     return promise;
-        //return promise;
+       
     //};
 
     //Example for an ADD that needs to update several tables---------------------------------------
@@ -131,7 +131,7 @@ class DelightDatabase extends SequelizeDatabase {
                 password,
                 fk_category_id
             };
-            this.SequelizeDatabase.DelightDatabase.create(newAccountObj).then((result)=>{
+            this.SequelizeDatabase.DelightDatabase.user_info.create(newAccountObj).then((result)=>{
                 
                 const newUserID = result.dataValues.id;
 
