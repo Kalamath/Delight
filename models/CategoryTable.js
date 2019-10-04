@@ -2,7 +2,6 @@
 
 const Sequelize = require("sequelize");
 
-//Example Model------------------------------------------------------------------------------------
 
 function defineCategory(sequelize){
     class Categories extends Sequelize.Model {}
@@ -20,7 +19,7 @@ function defineCategory(sequelize){
 
         const options = {
             sequelize,
-            modelName: "Categories",
+            modelName: "CategoryTable",
             timestamps: false
         }
 
@@ -29,7 +28,9 @@ function defineCategory(sequelize){
     Categories.associate = (models) => {
 
         const associateOptions = {
-
+            foreignKey: "fk_interest_id",
+            onDelete: "null",
+            onUpdate: "null"
             
         }
     }
