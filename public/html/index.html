@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- CSS -->
+    <link rel="stylesheet" href="../css/headerFooter.css" type="text/css">
     <link rel="stylesheet" href="../css/reset.css" type="text/css">
     <link rel="stylesheet" href="../css/slick.css" type="text/css">
     <link rel="stylesheet" href="../css/slick-theme.css" type="text/css">
@@ -54,14 +55,6 @@
             margin: 0 auto;
         }
 
-        .slick-slide {
-            margin: 0px 20px;
-        }
-
-        .slick-slide img {
-            width: 100%;
-        }
-
         .slick-prev:before,
         .slick-next:before {
             color: black;
@@ -71,6 +64,8 @@
         .slick-slide {
             transition: all ease-in-out .3s;
             opacity: .2;
+            background-color: rgba(18,18,18,.1);
+            /* border: 3px solid var(--lighter-gray); */
         }
 
         .slick-active {
@@ -79,6 +74,26 @@
 
         .slick-current {
             opacity: 1;
+        }
+
+        .ml6 {
+            position: relative;
+            font-weight: 900;
+            font-size: 50px;
+        }
+
+        .ml6 .text-wrapper {
+            position: relative;
+            display: inline-block;
+            padding-top: 0.2em;
+            padding-right: 0.05em;
+            padding-bottom: 0.1em;
+            overflow: hidden;
+        }
+
+        .ml6 .letter {
+            display: inline-block;
+            line-height: 1em;
         }
     </style>
 </head>
@@ -111,7 +126,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" id="signIn" href="#">Sign-In</a>
+                            <a class="nav-link" id="about" href="about.html">About</a>
                         </li>
                     </ul>
                 </div>
@@ -159,39 +174,32 @@
     </div>
 
     <div id="surveyQuestions" class="container displayNone">
-        <div class="jumbotron questions">
-                <section class="lazy slider" data-sizes="50vw">
-                        <div>
-                            <img data-lazy="http://placehold.it/350x300?text=1-350w"
-                                data-srcset="http://placehold.it/650x300?text=1-650w 650w, http://placehold.it/960x300?text=1-960w 960w"
-                                data-sizes="100vw">
-                        </div>
-                        <div>
-                            <img data-lazy="http://placehold.it/350x300?text=2-350w"
-                                data-srcset="http://placehold.it/650x300?text=2-650w 650w, http://placehold.it/960x300?text=2-960w 960w"
-                                data-sizes="100vw">
-                        </div>
-                        <div>
-                            <img data-lazy="http://placehold.it/350x300?text=3-350w"
-                                data-srcset="http://placehold.it/650x300?text=3-650w 650w, http://placehold.it/960x300?text=3-960w 960w"
-                                data-sizes="100vw">
-                        </div>
-                        <div>
-                            <img data-lazy="http://placehold.it/350x300?text=4-350w"
-                                data-srcset="http://placehold.it/650x300?text=4-650w 650w, http://placehold.it/960x300?text=4-960w 960w"
-                                data-sizes="100vw">
-                        </div>
-                        <div>
-                            <img data-lazy="http://placehold.it/350x300?text=5-350w"
-                                data-srcset="http://placehold.it/650x300?text=5-650w 650w, http://placehold.it/960x300?text=5-960w 960w"
-                                data-sizes="100vw">
-                        </div>
-                        <div>
-                            <!-- this slide should inherit the sizes attr from the parent slider -->
-                            <img data-lazy="http://placehold.it/350x300?text=6-350w"
-                                data-srcset="http://placehold.it/650x300?text=6-650w 650w, http://placehold.it/960x300?text=6-960w 960w">
-                        </div>
-                    </section>
+        <div class="jumbotron bg-transparent questions">
+            <section class="lazy slider" data-sizes="50vw">
+                <div>
+                    Question 1
+                </div>
+                <div>
+                    <p class="ml6">
+                        <span class="text-wrapper">
+                            <span class="letters">Good job! Pick another!</span>
+                        </span>
+                    </p>
+                </div>
+                <div>
+                    <p class="ml6">
+                        <span class="text-wrapper">
+                            <span class="letters">Good job! Pick another!</span>
+                        </span>
+                    </p>
+                </div>
+                <div>
+                    Question 4
+                </div>
+                <div>
+                    Question 5
+                </div>
+            </section>
         </div>
     </div>
 
@@ -212,6 +220,7 @@
 
 
     <!-- This MUST stay formatted like it is -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="../js/slick.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/fullclip.js"></script>
@@ -221,7 +230,7 @@
         });
 
         $('.fullBackground').fullClip({
-            images: ['../img/beachball.jpg', '../img/monkeys.jpg', '../img/threemen.jpg', '../img/friends.jpg', '../img/candy.jpg', '../img/fair.jpg', '../img/lego.jpg', '../img/bubbles.jpg',],
+            images: ['../img/beachball.jpg', '../img/monkeys.jpg', '../img/fair.jpg', '../img/bubbles.jpg',],
             transitionTime: 2500,
             wait: 8000,
         });
@@ -231,6 +240,24 @@
             infinite: true
         });
 
+        // Wrap every letter in a span
+        var textWrapper = document.querySelector('.ml6 .letters');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: '.ml6 .letter',
+                translateY: ["1.1em", 0],
+                translateZ: 0,
+                duration: 5000,
+                delay: (el, i) => 50 * i
+            }).add({
+                targets: '.ml6',
+                opacity: 0,
+                duration: 1000,
+                easing: "easeOutExpo",
+                delay: 1000
+            });
     </script>
 
 </body>
