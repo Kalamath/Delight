@@ -2,6 +2,7 @@
 
 const terminal = require("terminal-kit").terminal;
 const express = require("express");
+const configPaths = require("../config/configPaths.js");
 
 
 class HTMLroutes {
@@ -24,30 +25,7 @@ class HTMLroutes {
 
         this.router.get("/", (request, response) => {
 
-            // const handleBarsOBJ = {};
-
-            // const burgersPromise = this.delightDatabase.getAllBurgers();
-
-            // burgersPromise.then((burgers) => {
-      
-            //     handleBarsOBJ.burgers = burgers;
-            // });
-
-            // const ingredientsPromise = this.delightDatabase.getAllIngredients();
-
-            // ingredientsPromise.then((ingredients) => {
-        
-            //     handleBarsOBJ.ingredients = ingredients;
-            // });
-
-            // Promise.all([burgersPromise, ingredientsPromise]).then(() => {
-  
-            //     response.render("index", handleBarsOBJ);
-
-            // }).catch((error) => {
-
-            //     response.status(500).send(error);
-            // });
+            response.sendFile(configPaths.indexHTMLPath);
         });
     }
 }
