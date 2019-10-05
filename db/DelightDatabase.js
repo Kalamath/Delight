@@ -16,30 +16,30 @@ class DelightDatabase extends SequelizeDatabase {
 
         return new Promise((resolve, reject) => {
 
-            // add seeding code here using seeds variable above
+            this.database.Rooms.bulkCreate(seeds.rooms).then(() => {
 
+                this.database.Interests.bulkCreate(seeds.interests).then(() => {
 
+                    for (const user of seeds.users) {
 
-            //example----------------------------------------------------------
-            const promises = [];
+                        user.password = this.database.Users.generateHash(user.password);
+                    }
 
-            const categoryPromise = this.SequelizeDatabase.DelightDatabase.lkp_category.bulkCreate(seeds.lkp_category);
+                    this.database.Users.bulkCreate(seeds.users).then(() => {
 
-            promises.push(categoryPromise);
+                        this.database.Messages.bulkCreate(seeds.messages).then(() => {
 
-            const interestsPromise = this.SequelizeDatabase.DelightDatabase.lkp_interests.bulkCreate(seeds.lkp_interests);
+                            resolve();
 
-            promises.push(interestsPromise);
+                        }).catch((error) => {
 
-            const promptPromise = this.SequelizeDatabase.DelightDatabase.prompts.bulkCreate(seeds.prompts)
+                            reject(error);
+                        });
 
-            promises.push(promptPromise);
+                    }).catch((error) => {
 
-            Promise.all(promises).then(() => {
-
-            //     this.database.Burger_Ingredients.bulkCreate(seeds.burger_ingredients).then(() => {
-
-                    resolve();
+                        reject(error);
+                    });
 
                 }).catch((error) => {
 
@@ -50,186 +50,239 @@ class DelightDatabase extends SequelizeDatabase {
 
                 reject(error);
             });
-        }
+        });
+    }
 
-    //Example for doing an inner join and then pre-processing a pruned handlebars object-----------
+    login(creds) {
 
-    // getAllBurgers() {
-
-    //     return new Promise((resolve, reject) => {
-
-    //         const options = 
-    //         {
-    //             raw: true,
-    //             include: [this.database.Burgers, this.database.Ingredients],
-    //             order: [["fk_burger_id"], ["fk_ingredient_id"]]
-    //         };
-
-    //         this.database.Burger_Ingredients.findAll(options).then((BurgerIngredients) => {
-
-    //             const burgers = [];
-
-    //             for (const burgerIngredient of BurgerIngredients) {
-
-    //                 const ingredient = burgerIngredient["Ingredient.name"];
-
-    //                 const burger = {};
-
-    //                 burger.id = burgerIngredient["Burger.id"];
-    //                 burger.name = burgerIngredient["Burger.name"];
-    //                 burger.devoured = burgerIngredient["Burger.devoured"];
-    //                 burger.ingredients = [];
-
-    //                 if (burgers.length === 0 || burgers[burgers.length - 1].id !== burger.id) {
-
-    //                     burger.ingredients.push(ingredient);
-
-    //                     burgers.push(burger);
-    //                 }
-    //                 else {
-
-    //                     burgers[burgers.length - 1].ingredients.push(ingredient);
-    //                 }
-    //             }
-
-    //             resolve(burgers);
-
-    //         }).catch((error) => {
-
-    //             reject(error);
-    //         });
-    //     });
-    // }
-
-
-    //Example for a basic FINDALL from a table-----------------------------------------------------
-
-    //getAllInterests() {
-
-      //  const options = 
-        //{
-          //  raw: true
-        //};
-
-    //     const promise = this.database.Ingredients.findAll(options);
-        
-    //     return promise;
-       
-    //};
-
-    //Example for an ADD that needs to update several tables---------------------------------------
-
-    addNewUser(id, username, password, fk_category_id) {
-
-    //     return new Promise((resolve, reject) => {
         return new Promise((resolve, reject) => {
 
-            const newAccountObj = 
-            {
-                id,
-                username,
-                password,
-                fk_category_id
-            };
-            this.SequelizeDatabase.DelightDatabase.user_info.create(newAccountObj).then((result)=>{
-                
-                const newUserID = result.dataValues.id;
-
-                const username = result.dataValues.username;
-
-                const password = result.dataValues.password;
-            })
-
-            this.SequelizeDatabase.DelightDatabase
-        })
-    };
-    //         const newBurgerObj = 
-    //         {
-    //             name,
-    //             devoured: false
-    //         };
-
-    //         this.database.Burgers.create(newBurgerObj).then((result) => {
-
-    //             const newBurgerId = result.dataValues.id;
-
-    //             const burgerIngredients = [];
-
-    //             for (const ingredientId of ingredientIDs) {
-
-    //                 const newBurgerIngredient = 
-    //                 {
-    //                     fk_burger_id: newBurgerId,
-    //                     fk_ingredient_id: ingredientId
-    //                 };
-
-    //                 burgerIngredients.push(newBurgerIngredient);
-    //             }
-
-    //             this.database.Burger_Ingredients.bulkCreate(burgerIngredients).then(() => {
-
-    //                 resolve(result.dataValues);
-
-    //             }).catch((error) => {
-
-    //                 reject(error);
-    //             });
-
-    //         }).catch((error) => {
-
-    //             reject(error);
-    //         });
-    //     });
-    // }
-
-    //example for a basic UPDATE-------------------------------------------------------------------
-
-    updateAccount(user_info) {
-        
-        const options =
-            {
-                where: { id: user_info.id }
+            const options = {
+                raw: true,
+                where: {
+                    name: creds.name
+                }
             };
 
-            const promise = this.SequelizeDatabase.DelightDatabase.user_info.update(accountToUpdate, options);
+            this.database.Users.findOne(options).then((user) => {
 
-            return promise
-    };
+                if (user === null) {
 
-    deleteAccount(id) {
+                    reject("Error: User name does not exist");
+                    return;
+                }
 
-        const options = 
-        {
-            where: { id }
+                if (!this.database.Users.isValidPassword(creds.password, user.password)) {
+
+                    reject("Error: User password is incorrect");
+                    return;
+                }
+
+                this.getRandomInterestsRooms(50, 5).then((interestsRooms) => {
+
+                    const response = {
+                        userId: user.id,
+                        user: user.name,
+                        interestsRooms
+                    };
+
+                    resolve(response);
+
+                }).catch((error) => {
+
+                    reject(error);
+                });
+
+            }).catch((error) => {
+
+                reject(error);
+            });
+        });
+    }
+
+    signUp(creds) {
+
+        return new Promise((resolve, reject) => {
+
+            const options = {
+                raw: true,
+                where: {
+                    name: creds.name
+                }
+            };
+
+            this.database.Users.findOne(options).then((user) => {
+
+                if (user !== null) {
+
+                    reject("Error: User name already exists");
+                    return;
+                }
+
+                creds.password = this.database.Users.generateHash(creds.password);
+
+                this.database.Users.create(creds).then((user) => {
+
+                    this.getRandomInterestsRooms(50, 5).then((interestsRooms) => {
+          
+                        const response = {
+                            userId: user.id,
+                            user: user.name,
+                            interestsRooms
+                        };
+    
+                        resolve(response);
+
+                    }).catch((error) => {
+
+                        reject(error);
+                    });
+
+                }).catch((error) => {
+
+                    reject(error);
+                });
+
+            }).catch((error) => {
+
+                reject(error);
+            });
+        });
+    }
+
+    getRandomInterestsRooms(totalCount, groupCount) {
+
+        return new Promise((resolve, reject) => {
+
+            const options = {
+                raw: true,
+                attributes: [["id", "interestId"], ["name", "interest"]],
+                include: [{ model: this.database.Rooms, attributes: ["id", "name"] }],
+                order: [["id"]]
+            };
+
+            this.database.Interests.findAll(options).then((interestsRooms) => {
+
+                for (const interestRoom of interestsRooms) {
+
+                    interestRoom.room = interestRoom["Room.name"];  //Tidy object because attribute aliases don't work well with raw: true
+                    interestRoom.roomId = interestRoom["Room.id"];
+
+                    delete interestRoom["Room.name"];
+                    delete interestRoom["Room.id"];
+                }
+
+                const randomIds = new Set();  //Helps keep it close to O(1) time complexity
+
+                while (randomIds.size < totalCount) {
+
+                    const randomId = Math.floor(Math.random() * interestsRooms.length);
+
+                    if (!randomIds.has(randomIds)) {
+
+                        randomIds.add(randomId);
+                    }
+                }
+
+                const randomizedInterestsRooms = [];
+
+                let randomizedGroup = [];
+
+                for (const randomId of randomIds.values()) {
+
+                    randomizedGroup.push(interestsRooms[randomId]);   //Helps keep it close to O(1) time complexity
+
+                    if (randomizedGroup.length === groupCount) {
+
+                        randomizedInterestsRooms.push(randomizedGroup);
+
+                        randomizedGroup = [];
+                    }
+                }
+
+                resolve(randomizedInterestsRooms);
+
+            }).catch((error) => {
+
+                reject(error);
+            });
+        });
+    }
+
+    getMessagesForRoom(roomId) {
+
+        return new Promise((resolve, reject) => {
+
+            const options = {
+                raw: true,
+                attributes: ["time", "message"],
+                limit: 100,
+                where: {
+                    fk_room_id: roomId
+                },
+                include: [{ model: this.database.Users, attributes: ["name"] }],
+                order: [["id", "DESC"]]
+            };
+
+            this.database.Messages.findAll(options).then((messages) => {
+
+                for (const message of messages) {
+
+                    message.name = message["User.name"];  //Tidy object because attribute aliases don't work well with raw: true
+                    delete message["User.name"];
+                }
+
+                messages.reverse();  //After sorting by 'id' DESC and limiting to 100 messages, we reverse the array to get message order back to normal
+
+                resolve(messages);
+
+            }).catch((error) => {
+
+                reject(error);
+            });
+        });
+    }
+
+    saveNewMessage(message) {
+
+        //No promise returned. Just save it while chat messages flow between users.
+
+        const newMsgObj = {
+            fk_room_id: message.roomId,
+            fk_user_id: message.userId,
+            message: message.message
         };
 
-        const promise = this.SequelizeDatabase.DelightDatabase.user_info.destroy(options)
+        this.database.Messages.create(newMsgObj);
+    }
 
-        return promise;
-    };
-    //     const options = 
-    //     {
-    //         where: { id: burgerToUpdate.id }
-    //     };
+    getAllChatRoomNames() {
 
-    //     const promise = this.database.Burgers.update(burgerToUpdate, options);
+        return new Promise((resolve, reject) => {
 
-    //     return promise;
-    // }
+            const options = {
+                raw: true,
+                attributes: ["name"]
+            };
 
-    //example for a basic DELETE (it removes other rows because of CASCADING)----------------------
+            this.database.Rooms.findAll(options).then((rooms) => {
 
-    // deleteBurger(id) {
+                const roomsArray = [];
 
-    //     const options = 
-    //     {
-    //         where: { id }
-    //     };
+                for (const room of rooms) {
 
-    //     const promise = this.database.Burgers.destroy(options);
+                    roomsArray.push(room.name);
+                }
 
-    //     return promise;
-    // }
+                resolve(roomsArray);
+
+            }).catch((error) => {
+
+                reject(error);
+            });
+        });
+    }
 }
+
 
 module.exports = DelightDatabase;

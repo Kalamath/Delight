@@ -17,121 +17,64 @@ class APIroutes {
 
     assignRouteListeners() {
 
-        this.getAPIdelight();
+        this.getAPIDelightMessagesByRoomId();
 
-        this.postAPIdelight();
-
-        this.putAPIdelight();
-
-        this.deleteAPIdelight();
+        this.postAPIDelightLoginOrSignUp();
     }
 
-    getAPIdelight() {
+    getAPIDelightMessagesByRoomId() {
 
-        this.router.get("/api/delight", (request, response) => {
+        this.router.get("/api/delight/messages/:id", (request, response) => {
 
-            //response.json(...);
+            const id = request.params.id;
+
+            this.delightDatabase.getMessagesForRoom(id).then((messages) => {
+                
+                response.json(messages);
+
+            }).catch((error) => {
+                
+                terminal.red(`${error}\n`);
+
+                response.status(404).send(`${error}\n`);   //RoomId not found
+            });
         });
     }
 
-    postAPIdelight() {
+    postAPIDelightLoginOrSignUp() {
 
-        this.router.post("/api/delight", (request, response) => {
+        this.router.post("/api/delight/login", (request, response) => {
 
-            // const { name } = request.body;
-            // let { ingredientIDs } = request.body;
+            const creds = request.body;
 
-            // ingredientIDs = JSON.parse(ingredientIDs);  //JSON.stringify (client) then JSON.parse (server) allows empty arrays to be used for POST 
+            if (creds.isSignUp === "true") {
+    
+                this.delightDatabase.signUp(creds).then((interestsRooms) => {
 
-            // if (this.validatePost(name, ingredientIDs)) {
+                    response.json(interestsRooms);
 
-            //     this.delightDatabase.addNewBurger(name, ingredientIDs).then((result) => {
+                }).catch((error) => {
+                    
+                    terminal.red(`${error}\n`);
 
-            //         response.json(result);
+                    response.status(409).send(`${error}\n`);  //Conflict: User name already exists
+                });
+            }
+            else  {
+       
+                this.delightDatabase.login(creds).then((interestsRooms) => {
 
-            //     }).catch((error) => {
+                    response.json(interestsRooms);
 
-            //         terminal.red(`  Unable to save new burger:\n${error}`);
+                }).catch((error) => {
+                    
+                    terminal.red(`${error}\n`);
 
-            //         response.status(500).send(error);
-            //     });
-            // }
-            // else {
-
-            //     terminal.red(`  Invalid POST data:\n`);
-            //     console.log(name);
-            //     console.log(ingredientIDs);
-
-            //     response.status(422).send(`Invalid POST data:\n${name}\n${ingredientIDs}`);  //Unprocessable Entity (bad request data) 
-            // }
+                    response.status(401).send(`${error}\n`);   //Unauthorized (bad username or password)
+                });
+            }
         });
     }
-
-    putAPIdelight() {
-
-        this.router.put("/api/delight", (request, response) => {
-
-            // const burgerToUpdate = request.body;
-
-            // this.delightDatabase.updateBurger(burgerToUpdate).then(() => {
-
-            //     response.status(200).end();
-
-            // }).catch((error) => {
-
-            //     terminal.red(`  Unable to update burger:\n${error}`);
-
-            //     response.status(500).send(error);
-            // });
-        });
-    }
-
-    deleteAPIdelight() {
-
-        this.router.delete("/api/delight/:id", (request, response) => {
-
-            // const id = request.params.id;
-
-            // this.delightDatabase.deleteBurger(id).then(() => {
-
-            //     response.status(200).end();
-
-            // }).catch((error) => {
-
-            //     terminal.red(`  Unable to delete burger:\n${error}`);
-
-            //     response.status(500).send(error);
-            // });
-        });
-    }
-
-    // validatePost(name, ingredientIDs) {
-
-    //     if (typeof name !== "string" || name.length === 0) {
-
-    //         return false;
-    //     }
-
-    //     if (name.length > 30) {
-
-    //         return false;
-    //     }
-
-    //     if (!Array.isArray(ingredientIDs)) {
-
-    //         return false;
-    //     }
-
-    //     for (const id of ingredientIDs) {
-
-    //         if (typeof id !== "number" || id <= 0) {
-
-    //             return false;
-    //         }
-    //     }
-
-    //     return true;
-    // }
 }
 
 

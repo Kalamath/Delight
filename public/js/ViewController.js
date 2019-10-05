@@ -1,244 +1,465 @@
 "use strict";
-/* global surveyQuestions, surveyOptions */
-
+/* globals io */
 
 class ViewController {
 
     constructor() {
 
-        this.backgroundIMGElement = $("#fullBackground");
-        this.screenElement = $("#screen");
-        this.welcomeScreenElement = $("#welcomeScreen");
-        this.startLoginBTNElement = $("#startLoginBTN");
-        this.surveyScreenElement = $("#accountScreen");
-        this.nameInputElement = $("#name");
-        this.photoInputElement = $("#photo");
-        this.questionsWrapperElement = $("#questionsWrapper");
-        // this.submitLoginBTNElement = $("#submitLoginBTN");
-        this.friendMatchModalElement = $("#friendMatchModal");
-        this.matchNameElement = $("#matchName");
-        this.matchPhotoElement = $("#matchPhoto");
-        this.percentageMatchElement = $("#percentageMatch");
-        this.questionsForSurvey = $("#surveyQuestions");
-        this.loginBTNElement = $("#loginBTN");
+        this.prompts =
+        [
+            "Out of these five choices, which one interests you the most?",
+            "Good job! Pick Another!",
+            "Here's another one!",
+            "Keep 'em coming y'all!",
+            "Here we go again!",
+            "So which one do you like?",
+            "I'm impressed! Here's another one!",
+            "You're good at this! Go again!",
+            "Almost there! Pick again!",
+            "Last One!"
+        ];        
 
-        this.selectElements = [];
+        this.welcomeScreen = $("#welcomeScreen");
+        this.loginScreen = $("#loginScreen");
+        this.signupScreen = $("#signupScreen");
+        this.startLoginBTN = $("#startLoginBTN");
+        this.startSignupBTN = $("#startSignupBTN");
+        this.nameLogin = $("#nameLogin");
+        this.passwordLogin = $("#passwordLogin");
+        this.loginBTN = $("#loginBTN");
+        this.nameSignup = $("#nameSignup");
+        this.passwordSignup = $("#passwordSignup");
+        this.signupBTN = $("#signupBTN");
+        this.questions = $("#questions");
+        this.questionSlides = $("#questionSlides");
+        this.chatPortal = $("#chatPortal");
+        this.chatRooms = $("#chatRooms");
+        this.chatSession = $("#chatSession");
+
+        this.loginResponse = null;
+        this.user = null;
+        this.userId = null;
+
+        this.roomSelections = new Map();
+        this.selectionClicks = 0;
+
+        this.socket = io(`/delight/chat`);
+        this.currentRoom = null;
+        this.currentRoomId = null;
+
+        this.startBackgroundImages();
 
         this.assignListeners();
-
-        // this.assignQuestions();
     }
 
-    // assignQuestions() {
+    startBackgroundImages() {
 
-    //     let count = 1;
-
-    //     const classes = "formInput dropdownInput";
-
-    //     for (const question of surveyQuestions) {
-
-    //         const newSelectElement = $("<select>").attr("id", "question" + count).addClass(classes).attr("required", "");
-
-    //         const newOptionElement = $("<option>").attr("value", "").text(question.question);
-
-    //         newSelectElement.append(newOptionElement);
-
-    //         for (const option of surveyOptions) {
-
-    //             const newOptionElement = $("<option>").attr("value", option.value).html(option.text);
-
-    //             newSelectElement.append(newOptionElement);
-    //         }
-
-    //         this.questionsWrapperElement.append(newSelectElement);
-
-    //         this.selectElements.push(newSelectElement);
-
-    //         count++;
-    //     }
-    // }
+        $().fullClip({
+            images:
+                [
+                    "../img/blue.jpg",
+                    "../img/green.jpg",
+                    "../img/orange.jpg",
+                    "../img/pink.jpg",
+                    "../img/white.jpg",
+                    "../img/yellow.jpg"
+                ],
+            transitionTime: 2500,
+            wait: 10000,
+        });
+    }
 
     assignListeners() {
 
-        this.startLoginBTNElement.one("click", () => {
-            console.log("Im here first")
-            this.login();
+        this.startLoginBTN.one("click", () => {
+
+            this.startLogin();
         });
 
-        this.loginBTNElement.one("click", () => {
+        this.startSignupBTN.one("click", () => {
 
-
-            this.startSurvey();
-        })
-
-        // this.submitLoginBTNElement.click((event) => {
-
-        //     this.startSurvey(event);
-        //     // this.submitSurvey(event);
-        // });
+            this.startSignup();
+        });
     }
 
-    login() {
+    startLogin() {
 
-        this.welcomeScreenElement.fadeTo(500, 0.0).promise().then(() => {
+        this.welcomeScreen.fadeOut(1000).promise().then(() => {
 
-            setTimeout(() => {
+            this.loginScreen.removeClass("hidden").promise().then(() => {
 
-                console.log("im here next")
+                this.nameLogin.focus();
 
-                this.welcomeScreenElement.hide();
+                this.loginScreen.fadeTo(1000, 1.0);
 
-                this.screenElement.attr("class", "screenExpanded");
+                this.loginBTN.on("click", (event) => {
 
-                // this.startSurvey();
-
-            }, 500);
-
-            setTimeout(() => {
-
-                console.log("I'm after that")
-
-                this.surveyScreenElement.fadeTo(1000, 1.0);
-
-                this.nameInputElement.focus();
-
-            }, 1000);
+                    this.login(event);
+                });
+            });
         });
-    };
+    }
 
-    startSurvey() {
+    startSignup() {
 
-        this.surveyScreenElement.fadeTo(500, 0.0).promise().then(() => {
+        this.welcomeScreen.fadeOut(1000).promise().then(() => {
 
-            setTimeout(() => {
-                console.log("color change")
-                this.backgroundIMGElement.attr("class", "focus");
+            this.signupScreen.removeClass("hidden").promise().then(() => {
 
-                console.log('im here')
-                this.questionsForSurvey.fadeTo(1000, 1.0);
-            }, 500);
+                this.nameSignup.focus();
 
-            setTimeout(() => {
+                this.signupScreen.fadeTo(1000, 1.0);
 
-                console.log("then me")
+                this.signupBTN.on("click", (event) => {
 
-                // this.nameInputElement.focus();
-                // this.surveyScreenElement.fadeTo(1000, 1.0);
-
-                // this.backgroundIMGElement.attr("class", "focus");
-
-
-            }, 1000);
-
+                    this.signup(event);
+                });
+            });
         });
-    };
+    }
 
-    // submitSurvey(event) {
+    login(event) {
 
-    //     const name = this.nameInputElement.val().trim();
-    //     const photo = this.photoInputElement.val().trim();
-    //     const scores = [];
+        const name = this.nameLogin.val().trim();
+        const password = this.passwordLogin.val().trim();
 
-    //     for (const selectElement of this.selectElements) {
+        if (this.isInputValid(name, password, event)) {
 
-    //         const score = selectElement.val().trim();
+            event.preventDefault();
 
-    //         scores.push(score);
-    //     }
+            const creds = {
+                name,
+                password,
+                isSignUp: false
+            };
 
-    //     if (this.isInputValid(name, photo, scores)) {
+            const ajaxConfig ={
+                type: "POST",
+                data: creds
+            };
 
-    //         event.preventDefault();
+            $.ajax("/api/delight/login", ajaxConfig).then((response) => {
+                
+                this.nameLogin.val("");
+                this.passwordLogin.val("");
 
-    //         const newFriend =
-    //         {
-    //             name: name,
-    //             photo: photo,
-    //             scores: scores
-    //         };
+                this.loginResponse = response;
+                this.user = response.user;
+                this.userId = response.userId;
 
-    //         $.post("/api/friends", newFriend, (friendMatch) => {
-
-    //             console.log(`Friend Match...\n   id    : ${friendMatch.id}\n   name  : ${friendMatch.name}\n   photo : ${friendMatch.photo}\n   scores: [${friendMatch.scores}]\n   match%: ${friendMatch.percentageMatch}\n\n`);
-
-    //             this.showFriendMatchModal(friendMatch.name, friendMatch.photo, friendMatch.percentageMatch);
-
-    //             this.clearInputFields();
-
-    //         }).fail((error) => {
-
-    //             console.log(`${error.responseJSON.message}  ${error.responseJSON.reason}\n\n`);
-
-    //             alert(`${error.responseJSON.message}  ${error.responseJSON.reason}\n\n`);
-
-    //         });
-    //     }
-    // }
-
-    // isInputValid(name, photo, scores) {
-
-    //     if (typeof name !== 'string' || name.length === 0) {
-
-    //         return false;
-    //     }
-
-    //     if (typeof photo !== 'string' || photo.length === 0) {
-
-    //         return false;
-    //     }
-
-    //     if (!Array.isArray(scores) || scores.length !== surveyQuestions.length) {
-
-    //         return false;
-    //     }
-
-    //     for (const score of scores) {
-
-    //         if (typeof score !== 'string' || score.length === 0) {
-
-    //             return false;
-    //         }
-    //     }
-
-    //     return true;
-    // }
-
-    // clearInputFields() {
-
-    //     this.nameInputElement.val("");
-
-    //     this.photoInputElement.val("");
-
-    //     for (const selectElement of this.selectElements) {
-
-    //         selectElement.val("");
-    //     }
-    // }
-
-    showFriendMatchModal(name, photo, percentageMatch) {
-
-        this.matchNameElement.text(name);
-
-        this.matchPhotoElement.attr("src", photo);
-
-        this.percentageMatchElement.text(percentageMatch);
-
-        const modalOptions =
-        {
-            fadeDuration: 1000,
-            fadeDelay: 0.50
-        };
-
-        this.friendMatchModalElement.modal(modalOptions).promise().then(() => {
-
-            setTimeout(() => {
-
-                $(".close-modal").one("click", () => {
-
-                    location.reload();
+                this.loginScreen.fadeOut(1000).promise().then(() => {
+                   
+                    this.startQuestions();
                 });
 
-            }, 1000);
+            }).fail(() => {
+               
+                alert("Bad USER NAME or PASSWORD, try again.");
+            });
+        }
+    }
+
+    signup(event) {
+
+        const name = this.nameSignup.val().trim();
+        const password = this.passwordSignup.val().trim();
+
+        if (this.isInputValid(name, password, event)) {
+
+            event.preventDefault();
+
+            const creds = {
+                name,
+                password,
+                isSignUp: true
+            };
+
+            const ajaxConfig ={
+                type: "POST",
+                data: creds
+            };
+
+            $.ajax("/api/delight/login", ajaxConfig).then((response) => {
+                
+                this.nameSignup.val("");
+                this.passwordSignup.val("");
+
+                this.loginResponse = response;
+                this.user = response.user;
+                this.userId = response.userId;
+
+                this.signupScreen.fadeOut(1000).promise().then(() => {
+                   
+                    this.startQuestions();
+                });
+
+            }).fail(() => {
+               
+                alert("USER NAME already taken.");
+            });
+        }
+    }
+
+    isInputValid(name, password, event) {
+
+        if (name.length < 6) {
+
+            event.preventDefault();
+
+            alert("USER NAME must be at least 6 characters.");
+
+            return false;
+        }
+
+        if (password.length < 6) {
+
+            event.preventDefault();
+
+            alert("PASSWORD must be at least 6 characters.");
+
+            return false;
+        }
+
+        return true;
+    }
+
+    startQuestions() {
+
+        let promptCounter = 0;
+
+        for (const interestGroup of this.loginResponse.interestsRooms) {
+
+            const wrapperDiv = $("<div>");
+
+            const promptElem = $("<div>").addClass("prompt").text(this.prompts[promptCounter]);
+
+            wrapperDiv.append(promptElem);
+
+            for (const interest of interestGroup) {
+
+                const interestBtn = $("<button>").addClass("BTN nextSlideBTN")
+                                                 .attr("data-room", interest.room)
+                                                 .attr("data-roomId", interest.roomId)
+                                                 .attr("style", "outline: none;")
+                                                 .text(interest.interest);
+
+                wrapperDiv.append(interestBtn);
+            }
+
+            this.questionSlides.append(wrapperDiv);
+
+            promptCounter++;
+        }
+
+        $("#centeredScreen").removeClass("hidden");
+
+        this.questions.removeClass("hidden").promise().then(() => {
+
+            this.questions.fadeTo(1000, 1.0);
+
+            $(".single-item").slick({ dots: true, prevArrow: false }).promise().then(() => {
+
+                $(".slick-next").attr("style", "display: none;");  //hide forward arrow
+
+                $(".nextSlideBTN").on("click", (event) => {
+           
+                    this.selectionClicks++;
+  
+                    const dataset = event.currentTarget.dataset;
+
+                    const room   = dataset.room;
+                    const roomId = dataset.roomid;
+                    
+                    if (!this.roomSelections.has(room)) {
+
+                        this.roomSelections.set(room, roomId);
+                    }
+
+                    if (this.selectionClicks === 10) {
+   
+                        $(".nextSlideBTN").off();
+
+                        this.enterChatPortal();
+                    }
+                    else {
+
+                        $(".slick-next").click();
+                    }
+                });
+            });
         });
     }
-} 
+
+    enterChatPortal() {
+
+        this.questions.fadeOut(1000).promise().then(() => {
+           
+            this.chatPortal.removeClass("hidden");
+
+            this.chatPortal.fadeTo(1000, 1.0);
+        });
+
+        for (const room of this.roomSelections.entries()) {
+
+            const chatRoomBtn = $("<button>").addClass("BTN chatRoomBTN")
+                                             .attr("data-room", room[0])
+                                             .attr("data-roomId", room[1])
+                                             .attr("style", "outline: none;")
+                                             .text(room[0]);
+
+            this.chatRooms.append(chatRoomBtn);
+        }
+
+        $("#submitBtn").click((event) => {
+
+            event.preventDefault();
+
+            const message = $("#message").val().trim();
+
+            this.socket.emit(this.currentRoom, this.getUserMsg(message, false));
+
+            $("#message").val("");
+
+            return false;
+        });
+
+        $(".chatRoomBTN").click((event) => {
+           
+            const dataset = event.currentTarget.dataset;
+
+            const room   = dataset.room;
+            const roomId = dataset.roomid;
+
+            this.joinRoom(room, roomId);
+        });
+    }
+
+    joinRoom(newRoom, newRoomId) {
+
+        if (this.currentRoom !== null) {
+
+            this.socket.emit(this.currentRoom, this.getUserMsg("left chat room ", true));
+
+            this.socket.off(this.currentRoom);
+
+            $("#messages").empty();
+        }
+
+        this.currentRoom = newRoom;
+        this.currentRoomId = newRoomId;
+
+        this.getMessageHistory().then(() => {
+           
+            const messagesHeight = $("#messages")[0].scrollHeight;
+            const messagesLength = $("#messages > li").length;
+    
+            if (messagesLength === 100) {
+    
+                $("#messages > li:first").remove();
+            }
+            
+            $("#messages").scrollTop(messagesHeight);
+    
+            this.socket.emit(this.currentRoom, this.getUserMsg("joined chat room ", true));
+    
+            $("#message").focus(); 
+        });
+
+        this.socket.on(this.currentRoom, (msg) => {
+
+            const nameElem = $("<span>").addClass("name").text(msg.name);
+
+            const timeElem = $("<span>").addClass("time").text(msg.time);
+
+            const msgElemWrapper = $("<div>");  
+                
+            const msgElem = $("<span>").addClass("msg").text(msg.message);
+
+            msgElemWrapper.append(msgElem);
+
+            if (msg.isJoinLeave === true) {
+
+                const roomElem = $("<span>").addClass("room").text(`#${msg.room}`);
+
+                msgElemWrapper.append(roomElem);
+            }
+
+            const messageElem = $("<li>").append(nameElem).append(timeElem).append(msgElemWrapper)
+                                         .attr("style", "opacity: 0.0; position: relative; left: 100%; background: lightgreen;");
+
+            $("#messages").append(messageElem);
+
+            messageElem.animate({ left: "0%", opacity: "1.0", }, 500).promise().then(() => {
+               
+                setTimeout(() => {
+                    
+                    messageElem.attr("style", "");
+
+                }, 1000);
+            });
+
+            const messagesHeight = $("#messages")[0].scrollHeight;
+            const messagesLength = $("#messages > li").length;
+
+            if (messagesLength === 100) {
+
+                $("#messages > li:first").remove();
+            }
+
+            $("#messages").scrollTop(messagesHeight);
+        });
+    }
+
+    getUserMsg(msg, isJoinLeave) {
+
+        const userMsg = {
+            roomId: this.currentRoomId,
+            userId: this.userId,
+            message: msg,
+            name: this.user,
+            time: new Date().toLocaleTimeString(),
+            isJoinLeave,
+            room: this.currentRoom
+        };
+
+        return userMsg;
+    }
+
+    getMessageHistory() {
+
+        return new Promise((resolve, reject) => {
+            
+            const ajaxConfig ={
+                type: "GET"
+            };
+    
+            $.ajax(`/api/delight/messages/${this.currentRoomId}`, ajaxConfig).then((response) => {
+                
+                for (const msg of response) {
+               
+                    const nameElem = $("<span>").addClass("name").text(msg.name);
+    
+                    const timeElem = $("<span>").addClass("time").text(msg.time);
+        
+                    const msgElemWrapper = $("<div>");  
+                        
+                    const msgElem = $("<span>").addClass("msg").text(msg.message);
+        
+                    msgElemWrapper.append(msgElem);
+    
+                    const messageElem = $("<li>").append(nameElem).append(timeElem).append(msgElemWrapper);
+    
+                    $("#messages").append(messageElem);
+                }
+    
+                resolve();
+
+            }).fail((error) => {
+               
+                console.log(error);
+
+                resolve();  //not getting message history is acceptable to just move on, thus on reject
+            });
+        });
+    }
+}   
