@@ -82,8 +82,8 @@ body {
 }
 
 #footer {
-  background: var(--light-white-transparent);
-  border-top: 1px solid var(--medium-white);
+  /* background: var(--light-white-transparent); */
+  /* border-top: 1px solid var(--medium-white); */
   bottom: 0px;
   height: 66px;
   position: absolute;
