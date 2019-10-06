@@ -338,9 +338,9 @@ class ViewController {
 
         if (this.currentRoom !== null) {
 
-            this.socket.emit(this.currentRoom, this.getUserMsg("left chat room ", true));
-
             this.socket.off(this.currentRoom);
+
+            this.socket.emit(this.currentRoom, this.getUserMsg("left chat room ", true));
 
             $("#messages").empty();
         }
@@ -362,51 +362,51 @@ class ViewController {
     
             this.socket.emit(this.currentRoom, this.getUserMsg("joined chat room ", true));
     
-            $("#message").focus(); 
-        });
+            $("#message").focus();
 
-        this.socket.on(this.currentRoom, (msg) => {
+            this.socket.on(this.currentRoom, (msg) => {
 
-            const nameElem = $("<span>").addClass("name").text(msg.name);
-
-            const timeElem = $("<span>").addClass("time").text(msg.time);
-
-            const msgElemWrapper = $("<div>");  
-                
-            const msgElem = $("<span>").addClass("msg").text(msg.message);
-
-            msgElemWrapper.append(msgElem);
-
-            if (msg.isJoinLeave === true) {
-
-                const roomElem = $("<span>").addClass("room").text(`#${msg.room}`);
-
-                msgElemWrapper.append(roomElem);
-            }
-
-            const messageElem = $("<li>").append(nameElem).append(timeElem).append(msgElemWrapper)
-                                         .attr("style", "opacity: 0.0; position: relative; left: 100%; background: lightgreen;");
-
-            $("#messages").append(messageElem);
-
-            messageElem.animate({ left: "0%", opacity: "1.0", }, 500).promise().then(() => {
-               
-                setTimeout(() => {
+                const nameElem = $("<span>").addClass("name").text(msg.name);
+    
+                const timeElem = $("<span>").addClass("time").text(msg.time);
+    
+                const msgElemWrapper = $("<div>");  
                     
-                    messageElem.attr("style", "");
-
-                }, 1000);
+                const msgElem = $("<span>").addClass("msg").text(msg.message);
+    
+                msgElemWrapper.append(msgElem);
+    
+                if (msg.isJoinLeave === true) {
+    
+                    const roomElem = $("<span>").addClass("room").text(`#${msg.room}`);
+    
+                    msgElemWrapper.append(roomElem);
+                }
+    
+                const messageElem = $("<li>").append(nameElem).append(timeElem).append(msgElemWrapper)
+                                             .attr("style", "opacity: 0.0; position: relative; left: 100%; background: lightgreen;");
+    
+                $("#messages").append(messageElem);
+    
+                messageElem.animate({ left: "0%", opacity: "1.0", }, 500).promise().then(() => {
+                   
+                    setTimeout(() => {
+                        
+                        messageElem.attr("style", "");
+    
+                    }, 1000);
+                });
+    
+                const messagesHeight = $("#messages")[0].scrollHeight;
+                const messagesLength = $("#messages > li").length;
+    
+                if (messagesLength === 100) {
+    
+                    $("#messages > li:first").remove();
+                }
+    
+                $("#messages").scrollTop(messagesHeight);
             });
-
-            const messagesHeight = $("#messages")[0].scrollHeight;
-            const messagesLength = $("#messages > li").length;
-
-            if (messagesLength === 100) {
-
-                $("#messages > li:first").remove();
-            }
-
-            $("#messages").scrollTop(messagesHeight);
         });
     }
 

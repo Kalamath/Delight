@@ -250,6 +250,7 @@ class DelightDatabase extends SequelizeDatabase {
         const newMsgObj = {
             fk_room_id: message.roomId,
             fk_user_id: message.userId,
+            time: message.time,
             message: message.message
         };
 
