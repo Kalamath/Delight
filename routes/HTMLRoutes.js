@@ -19,6 +19,8 @@ class HTMLroutes {
     assignRouteListeners() {
 
         this.getHomePage();
+
+        this.getAboutPage();
     }
 
     getHomePage() {
@@ -26,6 +28,14 @@ class HTMLroutes {
         this.router.get("/", (request, response) => {
 
             response.sendFile(configPaths.indexHTMLPath);
+        });
+    }
+
+    getAboutPage() {
+
+        this.router.get("/about", (request, response) => {
+   
+            response.sendFile(configPaths.aboutHTMLPath);
         });
     }
 }

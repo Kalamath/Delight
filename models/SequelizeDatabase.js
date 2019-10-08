@@ -99,8 +99,7 @@ class SequelizeDatabase {
 
     connect() {
 
-        // if (process.env.SEQUELIZE_DB_FORCE_SYNC_AND_SEED === "true") {
-        if (true) {
+        if (process.env.SEQUELIZE_DB_FORCE_SYNC_AND_SEED === "true") {
 
             const options = 
             {

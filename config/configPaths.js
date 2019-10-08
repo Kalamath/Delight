@@ -16,6 +16,7 @@ const configPaths =
     sequelizeDatabasePath:       getFullPath("../models/SequelizeDatabase.js"),
     publicAssetsPath:            getFullPath("../public"),
     indexHTMLPath:               getFullPath("../public/html/index.html"),
+    aboutHTMLPath:               getFullPath("../public/html/about.html"),
     apiRoutesPath:               getFullPath("../routes/APIRoutes.js"),
     delightChatRoomsPath:        getFullPath("../routes/DelightChatRooms.js"),
     htmlRoutesPath:              getFullPath("../routes/HTMLRoutes.js"),
